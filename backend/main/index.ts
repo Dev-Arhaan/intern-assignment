@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllStockMeta, getStocks, pollStock } from './service';
+import { getAllStockMeta, pollStock } from './service';
 
 const router: Router = Router();
 

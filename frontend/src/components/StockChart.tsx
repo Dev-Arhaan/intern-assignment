@@ -5,15 +5,12 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "rec
 const StockChart = () => {
   const { stockData, loading } = useSelector((state: RootState) => state.stocks);
 
-  // Ensure stockData is always an array
-  const data = stockData || [];
-
   if (loading) return <p>Loading chart data...</p>;
-  if (data.length === 0) return <p>Select a stock to view the chart</p>;
+  if (!stockData || stockData.length === 0) return <p>Select a stock and duration to view the chart</p>;
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <LineChart data={data}>
+      <LineChart data={stockData}>
         <XAxis dataKey="timestamp" />
         <YAxis />
         <Tooltip />

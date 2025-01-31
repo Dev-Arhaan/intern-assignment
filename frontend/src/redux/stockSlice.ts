@@ -1,15 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-interface StockMeta {
-  id: string;
-  name: string;
-  symbol: string;
-  available: string[];
-}
+import axios from "axios";
 
 interface StockState {
-  stocks: StockMeta[];
+  stocks: any[];
   selectedStockId: string | null;
+  selectedDuration: string | null;
   stockData: any[];
   loading: boolean;
 }
@@ -17,26 +12,23 @@ interface StockState {
 const initialState: StockState = {
   stocks: [],
   selectedStockId: null,
+  selectedDuration: null,
   stockData: [],
   loading: false,
 };
 
-// Fetch stock metadata
+// Fetch available stocks
 export const fetchStocks = createAsyncThunk("stocks/fetchStocks", async () => {
-  const response = await fetch("http://localhost:3000/api/stocks");
-  return response.json();
+  const response = await axios.get("http://localhost:3000/api/stocks");
+  return response.data;
 });
 
-// Fetch stock data based on selected stock
+// Fetch stock data based on stock ID and duration
 export const fetchStockData = createAsyncThunk(
   "stocks/fetchStockData",
-  async (stockId: string) => {
-    const response = await fetch(`http://localhost:3000/api/stocks/${stockId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ duration: "1y" }),
-    });
-    return response.json();
+  async ({ stockId, duration }: { stockId: string; duration: string }) => {
+    const response = await axios.post(`http://localhost:3000/api/stocks/${stockId}`, { duration });
+    return response.data;
   }
 );
 
@@ -46,7 +38,12 @@ const stockSlice = createSlice({
   reducers: {
     setSelectedStock: (state, action) => {
       state.selectedStockId = action.payload;
-    }
+      state.selectedDuration = null; // Reset duration when a new stock is selected
+      state.stockData = []; // Clear previous stock data
+    },
+    setSelectedDuration: (state, action) => {
+      state.selectedDuration = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -60,8 +57,8 @@ const stockSlice = createSlice({
         state.stockData = action.payload.data;
         state.loading = false;
       });
-  }
+  },
 });
 
-export const { setSelectedStock } = stockSlice.actions;
+export const { setSelectedStock, setSelectedDuration } = stockSlice.actions;
 export default stockSlice.reducer;

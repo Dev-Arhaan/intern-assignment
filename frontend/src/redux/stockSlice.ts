@@ -27,7 +27,10 @@ export const fetchStocks = createAsyncThunk("stocks/fetchStocks", async () => {
 export const fetchStockData = createAsyncThunk(
   "stocks/fetchStockData",
   async ({ stockId, duration }: { stockId: string; duration: string }) => {
-    const response = await axios.post(`http://localhost:3000/api/stocks/${stockId}`, { duration });
+    const response = await axios.post(
+      `http://localhost:3000/api/stocks/${stockId}`,
+      { duration }
+    );
     return response.data;
   }
 );

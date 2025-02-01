@@ -99,7 +99,7 @@ export const generatePollingData = ({
     const fullDataLength = Object.keys(graphData).length;
     if (checkCache) {
         const numberOfPartitions = checkCache.numberOfPartitions;
-        console.log(numberOfPartitions)
+        console.log("number of partitions:", numberOfPartitions)
         const pollingTime = checkCache.pollingTime;
         const timestamp = checkCache.timestamp;
 

@@ -9,9 +9,9 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow only frontend to access
-    methods: "GET,POST", // Allow GET and POST requests
-    allowedHeaders: "Content-Type", // Allow specific headers
+    origin: "http://localhost:5173",
+    methods: "GET,POST",
+    allowedHeaders: "Content-Type",
   })
 );
 app.use(express.json());

@@ -2,9 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface StockState {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   stocks: any[];
   selectedStockId: string | null;
   selectedDuration: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   stockData: any[];
   loading: boolean;
 }

@@ -42,13 +42,15 @@ const StockSelector = () => {
   const selectedStock = stocks.find((stock) => stock.id === selectedStockId);
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className=" mx-auto p-6 bg-[#EFEFEF] rounded-t-lg shadow-md flex space-x-10">
+      <div>
+
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">Select a Stock</h2>
       <select
         onChange={handleStockChange}
         value={selectedStockId || ""}
-        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-6"
-      >
+        className="w-full p-3 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-6"
+        >
         <option value="" disabled>
           Select a stock
         </option>
@@ -58,16 +60,18 @@ const StockSelector = () => {
           </option>
         ))}
       </select>
+        </div>
 
       {selectedStock && (
         <>
+        <div>
+
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Select Duration</h2>
-          <div className="flex gap-2">
             <select
               onChange={handleDurationChange}
               value={selectedDuration || ""}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
+              className="w-full p-3 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
               <option value="" disabled>
                 Select duration
               </option>
@@ -77,17 +81,7 @@ const StockSelector = () => {
                 </option>
               ))}
             </select>
-            <button
-              className="w-1/3 border font-semibold border-gray-300 rounded-md px-2 py-3 bg-blue-500 text-white hover:bg-blue-600 transition"
-              onClick={() => {
-                if (selectedStockId && selectedDuration) {
-                  dispatch(fetchStockData({ stockId: selectedStockId, duration: selectedDuration }));
-                }
-              }}
-            >
-              Update {/** makes a Post request to api/stock/{id} */}
-            </button>
-          </div>
+              </div>
         </>
       )}
     </div>

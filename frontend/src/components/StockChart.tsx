@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import {
@@ -14,26 +15,34 @@ const StockChart = () => {
     (state: RootState) => state.stocks
   );
 
+  const memoizedData = useMemo(() => stockData, [stockData]);
+
   if (loading)
     return (
-      <div className="flex items-center justify-center h-20">
+      <div className="flex items-center justify-center h-150">
         <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
-  if (!stockData || stockData.length === 0)
+
+  if (!memoizedData || memoizedData.length === 0)
     return (
-      <p className="flex justify-center font-semibold text-2xl mt-10">
-        Select a stock and duration to view the chart
+      <p className="flex justify-center font-semibold text-2xl mt-10 h-150">
+        Select a stock and duration & wait a moment to view the chart
       </p>
     );
 
   return (
-    <ResponsiveContainer width="95%" height={600} className={`bg-[#ECE7DE] rounded-lg my-10 mx-auto py-5 shadow-xl`}>
-      <LineChart data={stockData}>
+    <ResponsiveContainer width="100%" height={600}>
+      <LineChart data={memoizedData}>
         <XAxis dataKey="timestamp" />
         <YAxis />
         <Tooltip />
-        <Line type="monotone" dataKey="price" stroke="#493657" />
+        <Line
+          type="monotone"
+          dataKey="price"
+          stroke="#493657"
+          isAnimationActive={false}
+        />
       </LineChart>
     </ResponsiveContainer>
   );

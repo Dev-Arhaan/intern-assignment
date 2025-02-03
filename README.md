@@ -97,7 +97,12 @@ Eg.
 
 ## Running services
 ### Instructions to run the UI
-_enter details here!_
+```
+cd frontend
+yarn # or npm i, to install dependencies
+yarn start # or npm start, to...start?
+npm run dev, to... run?
+```
 
 ### Instructions to run the backend API
 ```bash
